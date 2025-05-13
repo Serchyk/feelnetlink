@@ -9,7 +9,7 @@
                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       
       const iosStoreUrl = 'https://apps.apple.com/app/idYOUR_APP_ID';
-      const androidStoreUrl = 'https://play.google.com/store/apps/details?id=YOUR_PACKAGE';
+      const androidStoreUrl = 'https://play.google.com/store/apps/details?id=com.simulation.trending.livecall&hl=ru';
       
       if (isIOS) {
         window.location.href = 'itms-apps://itunes.apple.com/app/idYOUR_APP_ID';
@@ -17,7 +17,7 @@
           window.location.href = iosStoreUrl;
         }, 200);
       } else {
-        window.location.href = 'market://details?id=YOUR_PACKAGE';
+        window.location.href = 'market://details?id=com.simulation.trending.livecall&hl=ru';
         setTimeout(() => {
           window.location.href = androidStoreUrl;
         }, 200);
@@ -43,7 +43,7 @@
   <noscript>
     <p>Please enable JavaScript to be redirected.</p>
     <a href="https://apps.apple.com/app/idYOUR_APP_ID">Download for iOS</a>
-    <a href="https://play.google.com/store/apps/details?id=YOUR_PACKAGE">Download for Android</a>
+    <a href="https://play.google.com/store/apps/details?id=com.simulation.trending.livecall&hl=ru">Download for Android</a>
   </noscript>
 </body>
 </html>
