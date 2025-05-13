@@ -3,6 +3,27 @@
 <head>
   <title>Feelnet Redirect</title>
   <script>
+    function redirectToStore() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOS = /iPad|iPhone|iPod/.test(userAgent) || 
+                   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      
+      const iosStoreUrl = 'https://apps.apple.com/app/idYOUR_APP_ID';
+      const androidStoreUrl = 'https://play.google.com/store/apps/details?id=YOUR_PACKAGE';
+      
+      if (isIOS) {
+        window.location.href = 'itms-apps://itunes.apple.com/app/idYOUR_APP_ID';
+        setTimeout(() => {
+          window.location.href = iosStoreUrl;
+        }, 200);
+      } else {
+        window.location.href = 'market://details?id=YOUR_PACKAGE';
+        setTimeout(() => {
+          window.location.href = androidStoreUrl;
+        }, 200);
+      }
+    }
+
     function redirect() {
       const urlParams = new URLSearchParams(window.location.search);
       const deepLink = urlParams.get('deep_link');
@@ -10,23 +31,19 @@
       if (deepLink) {
         window.location.href = decodeURIComponent(deepLink);
         
-        setTimeout(function() {
-          const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-          const storeUrl = isIOS 
-            ? 'https://apps.apple.com/app/idYOUR_APP_ID' 
-            : 'https://play.google.com/store/apps/details?id=YOUR_PACKAGE';
-          window.location.href = storeUrl;
-        }, 500);
+        setTimeout(redirectToStore, 250);
       } else {
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        window.location.href = isIOS 
-          ? 'https://apps.apple.com/app/idYOUR_APP_ID' 
-          : 'https://play.google.com/store/apps/details?id=YOUR_PACKAGE';
+        redirectToStore();
       }
     }
   </script>
 </head>
 <body onload="redirect()">
   <p>Redirecting to Feelnet...</p>
+  <noscript>
+    <p>Please enable JavaScript to be redirected.</p>
+    <a href="https://apps.apple.com/app/idYOUR_APP_ID">Download for iOS</a>
+    <a href="https://play.google.com/store/apps/details?id=YOUR_PACKAGE">Download for Android</a>
+  </noscript>
 </body>
 </html>
