@@ -2,25 +2,33 @@
 <html>
 <head>
   <title>Feelnet Redirect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>
     function redirectToStore() {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      const isIOS = /iPad|iPhone|iPod/.test(userAgent) || 
+      // Улучшенное определение платформы
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       
+      // URL для магазинов (замените на свои)
       const iosStoreUrl = 'https://apps.apple.com/app/idYOUR_APP_ID';
       const androidStoreUrl = 'https://play.google.com/store/apps/details?id=com.wildberries.ru';
       
+      // Специальные схемы для открытия приложений магазинов
+      const iosAppStoreScheme = 'itms-apps://itunes.apple.com/app/idYOUR_APP_ID';
+      const androidPlayStoreScheme = 'intent://details?id=com.wildberries.ru#Intent;scheme=market;package=com.android.vending;end';
+      
       if (isIOS) {
-        window.location.href = 'itms-apps://itunes.apple.com/app/idYOUR_APP_ID';
+        // Для iOS пробуем несколько вариантов
+        window.location = iosAppStoreScheme;
         setTimeout(() => {
-          window.location.href = iosStoreUrl;
-        }, 200);
+          window.location = iosStoreUrl;
+        }, 500);
       } else {
-        window.location.href = 'market://details?id=com.wildberries.ru';
+        // Для Android используем Intent
+        window.location = androidPlayStoreScheme;
         setTimeout(() => {
-          window.location.href = androidStoreUrl;
-        }, 200);
+          window.location = androidStoreUrl;
+        }, 500);
       }
     }
 
@@ -29,10 +37,13 @@
       const deepLink = urlParams.get('deep_link');
       
       if (deepLink) {
-        window.location.href = decodeURIComponent(deepLink);
+        // Пробуем открыть приложение
+        window.location = decodeURIComponent(deepLink);
         
+        // Если через 250мс не открылось - идем в магазин
         setTimeout(redirectToStore, 250);
       } else {
+        // Если нет deep_link - сразу в магазин
         redirectToStore();
       }
     }
@@ -42,7 +53,7 @@
   <p>Redirecting to Feelnet...</p>
   <noscript>
     <p>Please enable JavaScript to be redirected.</p>
-    <a href="https://apps.apple.com/app/idYOUR_APP_ID">Download for iOS</a>
+    <a href="https://apps.apple.com/app/idYOUR_APP_ID">Download for iOS</a><br>
     <a href="https://play.google.com/store/apps/details?id=com.wildberries.ru">Download for Android</a>
   </noscript>
 </body>
