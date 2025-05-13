@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feelnet Redirect</title>
+  <script>
+    function redirect() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const deepLink = urlParams.get('deep_link');
+      
+      if (deepLink) {
+        window.location.href = decodeURIComponent(deepLink);
+        
+        setTimeout(function() {
+          const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+          const storeUrl = isIOS 
+            ? 'https://apps.apple.com/app/idYOUR_APP_ID' 
+            : 'https://play.google.com/store/apps/details?id=YOUR_PACKAGE';
+          window.location.href = storeUrl;
+        }, 500);
+      } else {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        window.location.href = isIOS 
+          ? 'https://apps.apple.com/app/idYOUR_APP_ID' 
+          : 'https://play.google.com/store/apps/details?id=YOUR_PACKAGE';
+      }
+    }
+  </script>
+</head>
+<body onload="redirect()">
+  <p>Redirecting to Feelnet...</p>
+</body>
+</html>
